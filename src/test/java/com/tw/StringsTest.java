@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 // This is a sample file. Please delete it.
@@ -19,7 +20,7 @@ class StringTest {
             charArray[i] = strings.charAt(i);
         }
         //System.out.println("the third element is: "+charArray[2]);
-        assertEquals(new char[]{'I', ' ', 'a', 'm', ' ', 'D', 'K', '.'}, charArray);
+        assertArrayEquals(new char[]{'I', ' ', 'a', 'm', ' ', 'D', 'K', '.'}, charArray);
     }
 
     @Test
@@ -31,6 +32,7 @@ class StringTest {
             intArray[i] = (int) strings.charAt(i);
         }
         System.out.println(Arrays.toString(intArray));
+        assertEquals("[116, 111, 32, 105, 110, 116]", Arrays.toString(intArray));
     }
 
     @Test
@@ -41,6 +43,7 @@ class StringTest {
         for (int i = 0; i < splitedString.length; i++) {
             System.out.println(splitedString[i]);
         }
+        assertEquals("ccc", splitedString[2]);
     }
 
     @Test
@@ -88,17 +91,21 @@ class StringTest {
 
         System.out.println("original strings:" + strings);
         System.out.println("a-b swap:" + temp4);
+
+        assertEquals("bbb,aaa,ccc", temp4);
     }
     @Test
     void align_strings() {
         String strings = "abc";
         StringBuilder temp = new StringBuilder();
         int setNum = 70;
-        for (int i = 0; i < setNum ; i++) {
+        for (int i = 0; i < setNum - 1; i++) {
             temp.append(" ");
         }
-        temp.replace((temp.length()-strings.length()),temp.length()-1,strings);
-        System.out.println(temp);
+        temp.replace((setNum-strings.length()), setNum - 1, strings);
+        String result = temp.toString();
+        System.out.println(result);
+        assertEquals("                                                                   abc", result);
     }
     @Test
     void reverse_strings() {
@@ -106,6 +113,7 @@ class StringTest {
         strings = "qwer";
         String reverse = new StringBuffer(strings).reverse().toString();
         System.out.println(reverse);
+        assertEquals("rewq", reverse);
     }
     @Test
     void reverse_word_in_strings1() {
@@ -125,6 +133,7 @@ class StringTest {
             }
         }
         System.out.println(reverseWord);
+        assertEquals("enO owT eerhT", reverseWord.toString());
     }
     @Test
     void reverse_word_in_strings2() {
@@ -141,13 +150,14 @@ class StringTest {
             }
         }
         System.out.println(reverseWord);
+        assertEquals("Three Two One", reverseWord.toString());
     }
     @Test
     void turn_the_first_letter_in_uppercase_of_strings() {
         String strings = "one Two three";
         StringBuilder firstUppercase = new StringBuilder();
         firstUppercase.append(Character.toUpperCase(strings.charAt(0)));
-        for (int i = 1; i <strings.toCharArray().length - 1 ; i++) {
+        for (int i = 1; i <strings.length() - 1 ; i++) {
             if (Character.isLowerCase(strings.charAt(i)) && strings.charAt(i - 1) == ' ' ){
                 firstUppercase = firstUppercase.append(Character.toUpperCase(strings.charAt(i)));
             }
@@ -155,17 +165,19 @@ class StringTest {
                 firstUppercase = firstUppercase.append(strings.charAt(i));
             }
         }
-        firstUppercase.append(strings.charAt(strings.toCharArray().length - 1));
+        //firstUppercase.append(strings.charAt(strings.toCharArray().length - 1));
+        firstUppercase.append(strings.charAt(strings.length() - 1));
         System.out.println(firstUppercase);
+        assertEquals("One Two Three", firstUppercase.toString());
     }
     @Test
     void match_mobile_phone_numbers_in_strings() {
         String phoneNum1 = "+86 155 5032 2354";
         String phoneNum2 = "+86 063 5032 2354";
         String phoneNum3 = "+86 15550322354";
-        isPhoneNum(phoneNum1);
-        isPhoneNum(phoneNum2);
-        isPhoneNum(phoneNum3);
+        assertEquals(true, isPhoneNum(phoneNum1));
+        assertEquals(false, isPhoneNum(phoneNum2));
+        assertEquals(false, isPhoneNum(phoneNum3));
 
     }
 
